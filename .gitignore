@@ -1,4 +1,4 @@
 *.o
 *.a
-
+.idea
 mount_gridfs

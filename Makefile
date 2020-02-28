@@ -1,9 +1,9 @@
 CC=g++
 CCOPTS=-g -D_FILE_OFFSET_BITS=64 -I. -I/usr/local/include
-LDOPTS=-L/usr/local/lib -L. -lmongoclient -lfuse_ino64 -lboost_thread-mt -lboost_filesystem-mt -lboost_system-mt
+LDOPTS=-L/usr/local/lib -L. -lmongoclient -lfuse -lboost_thread-mt -lboost_filesystem-mt -lboost_system-mt
 
-mount_gridfs : operations.o local_gridfile.o main.o options.o
-	$(CC) -o mount_gridfs main.o operations.o options.o local_gridfile.o $(LDOPTS)
+mount_gridfs : operations.o log.o local_gridfile.o main.o options.o
+	$(CC) -o mount_gridfs main.o log.o operations.o options.o local_gridfile.o $(LDOPTS)
 
 operations.o : operations.cpp operations.h
 	$(CC) $(CCOPTS) -c operations.cpp
@@ -17,5 +17,8 @@ main.o : main.cpp
 options.o : options.cpp options.h
 	$(CC) $(CCOPTS) -c options.cpp
 
+log.o : log.cpp log.h
+	$(CC) $(CCOPTS) -c log.cpp
+
 clean:
-	rm -f mount_gridfs main.o operations.o options.o local_gridfile.o
+	rm -f mount_gridfs main.o operations.o options.o local_gridfile.o log.o
